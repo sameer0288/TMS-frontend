@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../path-to/AuthContext.js";
 import { useNavigate } from "react-router-dom";
+import { BiShow, BiHide } from "react-icons/bi"; // Assuming you have these icons
 
 const AuthForm = ({ showToast, setAuthStatus, authType }) => {
   const { setAuthToken } = useAuth();
@@ -11,6 +12,7 @@ const AuthForm = ({ showToast, setAuthStatus, authType }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -60,7 +62,9 @@ const AuthForm = ({ showToast, setAuthStatus, authType }) => {
     setEmail("");
     setPassword("");
   };
-
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
   return (
     <div>
       <h2>{authType === "login" ? "Login" : "Register"}</h2>
@@ -72,12 +76,25 @@ const AuthForm = ({ showToast, setAuthStatus, authType }) => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
+        <div style={{ position: "relative" }}>
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "98%" }}
+          />
+          <span
+            style={{
+              position: "absolute",
+              top: "20%",
+              right: "10px",
+              cursor: "pointer",
+            }}
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? <BiHide /> : <BiShow />}
+          </span>
+        </div>
         {loading && <p>Loading...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button onClick={authType === "login" ? handleLogin : handleRegister}>
