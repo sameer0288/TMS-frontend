@@ -13,7 +13,6 @@ const EditTask = () => {
   });
 
   useEffect(() => {
-    // Fetch the task data for editing
     axios
       .get(`http://localhost:5000/api/tasks/${taskId}`)
       .then((response) => setTask(response.data))
