@@ -20,7 +20,7 @@ const TaskList = () => {
   useEffect(() => {
     // Fetch tasks from the backend
     axios
-      .get("http://localhost:5000/api/tasks")
+      .get("https://tms-backend-lovv.onrender.com/api/tasks")
       .then((response) => setTasks(response.data))
       .catch((error) => console.error("Error fetching tasks:", error));
   }, []);
@@ -28,7 +28,9 @@ const TaskList = () => {
   const handleDelete = async (taskId) => {
     try {
       // Send a DELETE request to remove the task
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`);
+      await axios.delete(
+        `https://tms-backend-lovv.onrender.com/api/tasks/${taskId}`
+      );
 
       // Update the local state after successful deletion
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));

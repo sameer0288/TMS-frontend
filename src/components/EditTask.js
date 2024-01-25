@@ -15,7 +15,7 @@ const EditTask = () => {
   useEffect(() => {
     // Fetch the task data for editing
     axios
-      .get(`http://localhost:5000/api/tasks/${taskId}`)
+      .get(`https://tms-backend-lovv.onrender.com/api/tasks/${taskId}`)
       .then((response) => setTask(response.data))
       .catch((error) => console.error("Error fetching task:", error));
   }, [taskId]);
@@ -23,7 +23,10 @@ const EditTask = () => {
   const handleUpdate = async () => {
     try {
       // Send a PUT request to update the task
-      await axios.put(`http://localhost:5000/api/tasks/${taskId}`, task);
+      await axios.put(
+        `https://tms-backend-lovv.onrender.com/api/tasks/${taskId}`,
+        task
+      );
 
       // Redirect to the task list after successful update
       navigate("/task");
